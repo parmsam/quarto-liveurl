@@ -1,0 +1,10 @@
+---
+title: "quarto-liveurl"
+---
+
+A Quarto Reveal.js extension for attaching and viewing live URLs during presentations.
+
+## Examples
+
+- [Core Features](example.qmd) — single URL, multiple URLs, launcher, no-URL slides
+- [Sticky & Global URL](example-sticky.qmd) — persistent panel across slide transitions

@@ -1,0 +1,14 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "quarto-liveurl"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: example.qmd
+        text: Core Features
+      - href: example-sticky.qmd
+        text: Sticky & Global
