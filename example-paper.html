@@ -134,7 +134,7 @@
 </div>
 
 </section>
-<section id="about-this-deck" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7">
+<section id="about-this-deck" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7">
 <h2>About this deck</h2>
 <p>These slides summarise <a href="https://arxiv.org/abs/1706.03762"><em>Attention Is All You Need</em></a> (Vaswani et al., NeurIPS 2017) — the paper that introduced the <strong>Transformer</strong>.</p>
 <ul>
@@ -143,7 +143,7 @@
 <li>Close and reopen on the same slide to restore your scroll position</li>
 </ul>
 </section>
-<section id="the-problem" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S1">
+<section id="the-problem" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S1">
 <h2>The Problem</h2>
 <p>Before Transformers, sequence modelling relied on <strong>RNNs and LSTMs</strong>.</p>
 <p><strong>Key limitations:</strong></p>
@@ -156,7 +156,7 @@
 </blockquote>
 <p>Transformers replace recurrence with <strong>attention over the full sequence</strong>.</p>
 </section>
-<section id="queries-keys-values" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2">
+<section id="queries-keys-values" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2">
 <h2>Queries, Keys &amp; Values</h2>
 <p>Each token produces three learned vectors:</p>
 <table class="caption-top">
@@ -183,7 +183,7 @@
 </table>
 <p>Attention computes a weighted sum of Values, where the weights come from matching each Query against all Keys.</p>
 </section>
-<section id="scaled-dot-product-attention" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS1">
+<section id="scaled-dot-product-attention" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS1">
 <h2>Scaled Dot-Product Attention</h2>
 <p><span class="math display">\[\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V\]</span></p>
 <ul>
@@ -194,7 +194,7 @@
 </ul>
 <p>All positions are computed <strong>in parallel</strong> — no sequential dependency.</p>
 </section>
-<section id="multi-head-attention" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS2">
+<section id="multi-head-attention" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS2">
 <h2>Multi-Head Attention</h2>
 <p>Running attention once captures one type of relationship.</p>
 <p><strong>Multi-head attention</strong> runs it <span class="math inline">\(h\)</span> times with different projections:</p>
@@ -203,7 +203,7 @@
 <p>The paper uses <strong><span class="math inline">\(h = 8\)</span> heads</strong>, <span class="math inline">\(d_k = d_v = 64\)</span>.</p>
 <p>Each head specialises in a different relationship — syntax, coreference, long-range dependencies — simultaneously.</p>
 </section>
-<section id="the-transformer-architecture" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3">
+<section id="the-transformer-architecture" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S3">
 <h2>The Transformer Architecture</h2>
 <p>An <strong>encoder–decoder</strong> design with 6 layers each.</p>
 <p>Every layer wraps each sub-layer with a residual connection + layer norm:</p>
@@ -214,7 +214,7 @@
 </ul>
 </div>
 </section>
-<section id="encoder" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1">
+<section id="encoder" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1">
 <h2>Encoder</h2>
 <p>Maps input tokens to continuous representations.</p>
 <p>Each of the <strong>6 encoder layers</strong> applies:</p>
@@ -225,7 +225,7 @@
  Feed-Forward Network      → Add &amp; Norm</code></pre>
 <p>Self-attention is <strong>bidirectional</strong> — every position sees the full sequence.</p>
 </section>
-<section id="decoder" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1">
+<section id="decoder" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1">
 <h2>Decoder</h2>
 <p>Generates the output sequence one token at a time.</p>
 <p>Each of the <strong>6 decoder layers</strong> applies:</p>
@@ -239,7 +239,7 @@
 <p><strong>Masking</strong> prevents position <span class="math inline">\(i\)</span> from attending to positions <span class="math inline">\(&gt; i\)</span>.</p>
 <p><strong>Cross-attention</strong> reads from the encoder’s final representations.</p>
 </section>
-<section id="positional-encoding" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS5">
+<section id="positional-encoding" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS5">
 <h2>Positional Encoding</h2>
 <p>Attention is <strong>permutation-invariant</strong> — no built-in notion of position.</p>
 <p>Fixed sinusoidal encodings are added to the input embeddings:</p>
@@ -250,7 +250,7 @@
 <li>Generalises to sequence lengths not seen during training</li>
 </ul>
 </section>
-<section id="training" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S5">
+<section id="training" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S5">
 <h2>Training</h2>
 <ul>
 <li><strong>Optimiser:</strong> Adam with a warm-up learning rate schedule</li>
@@ -259,7 +259,7 @@
 </ul>
 <p>The base model trained in <strong>12 hours</strong>. Prior ensemble models took days.</p>
 </section>
-<section id="results" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S6">
+<section id="results" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S6">
 <h2>Results</h2>
 <p><strong>WMT 2014 translation benchmarks:</strong></p>
 <table class="caption-top">
@@ -285,7 +285,7 @@
 </table>
 <p>New state of the art on both tasks — at a fraction of the training cost.</p>
 </section>
-<section id="why-it-mattered" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S7">
+<section id="why-it-mattered" class="slide level2 smaller" data-liveurl="https://arxiv.org/html/1706.03762v7#S7">
 <h2>Why It Mattered</h2>
 <p>The Transformer is now the backbone of nearly every large model.</p>
 <table class="caption-top">
