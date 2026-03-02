@@ -4,70 +4,84 @@
     "href": "example-paper.html#about-this-deck",
     "title": "Attention Is All You Need",
     "section": "About this deck",
-    "text": "About this deck\nThese slides summarise Attention Is All You Need (Vaswani et al., NeurIPS 2017) — the paper that introduced the Transformer.\nThe full paper is always one keypress away:\n\nPress u to open it in the side panel\nThe panel stays open as you advance through slides (sticky mode)\nScroll to any section and your position is preserved across slides"
+    "text": "About this deck\nThese slides summarise Attention Is All You Need (Vaswani et al., NeurIPS 2017) — the paper that introduced the Transformer.\nThe full paper is always one keypress away:\n\nPress u to open it in the side panel\nThe panel stays open as you advance through slides (sticky mode)\nScroll to any section and your position is preserved"
   },
   {
-    "objectID": "example-paper.html#the-problem-sequential-bottlenecks",
-    "href": "example-paper.html#the-problem-sequential-bottlenecks",
+    "objectID": "example-paper.html#the-problem",
+    "href": "example-paper.html#the-problem",
     "title": "Attention Is All You Need",
-    "section": "The Problem: Sequential Bottlenecks",
-    "text": "The Problem: Sequential Bottlenecks\nBefore Transformers, sequence modelling relied on RNNs and LSTMs.\nKey limitations:\n\nHidden state \\(h_t\\) depends on \\(h_{t-1}\\) → computation is inherently sequential\nLong sequences → vanishing gradients, forgetting early context\nHard to parallelise → slow to train on modern hardware\n\n\n“The dominant sequence transduction models are based on complex recurrent or convolutional neural networks.” — §1\n\nTransformers eliminate recurrence entirely. Every position attends to every other position in parallel."
+    "section": "The Problem",
+    "text": "The Problem\nBefore Transformers, sequence modelling relied on RNNs and LSTMs.\nKey limitations:\n\n\\(h_t\\) depends on \\(h_{t-1}\\) → inherently sequential, hard to parallelise\nLong sequences → vanishing gradients, early context is forgotten\n\n\n“The dominant sequence transduction models are based on complex recurrent or convolutional neural networks.” — §1\n\nTransformers replace recurrence with attention over the full sequence."
   },
   {
-    "objectID": "example-paper.html#the-core-idea-self-attention",
-    "href": "example-paper.html#the-core-idea-self-attention",
+    "objectID": "example-paper.html#queries-keys-values",
+    "href": "example-paper.html#queries-keys-values",
     "title": "Attention Is All You Need",
-    "section": "The Core Idea: Self-Attention",
-    "text": "The Core Idea: Self-Attention\nInstead of passing state through time, each token directly attends to all other tokens in the sequence.\nThree learned projections per token:\n\n\n\nMatrix\nRole\n\n\n\n\nQ (Query)\nWhat am I looking for?\n\n\nK (Key)\nWhat do I offer?\n\n\nV (Value)\nWhat do I contribute if selected?\n\n\n\nScaled dot-product attention:\n\\[\\text{Attention}(Q, K, V) = \\text{softmax}\\!\\left(\\frac{QK^\\top}{\\sqrt{d_k}}\\right)V\\]\nThe \\(\\sqrt{d_k}\\) scaling prevents the dot products from growing too large and pushing softmax into regions of tiny gradients."
+    "section": "Queries, Keys & Values",
+    "text": "Queries, Keys & Values\nEach token produces three learned vectors:\n\n\n\nVector\nQuestion it answers\n\n\n\n\nQ (Query)\nWhat am I looking for?\n\n\nK (Key)\nWhat do I offer others?\n\n\nV (Value)\nWhat do I contribute if selected?\n\n\n\nAttention computes a weighted sum of Values, where the weights come from matching each Query against all Keys."
+  },
+  {
+    "objectID": "example-paper.html#scaled-dot-product-attention",
+    "href": "example-paper.html#scaled-dot-product-attention",
+    "title": "Attention Is All You Need",
+    "section": "Scaled Dot-Product Attention",
+    "text": "Scaled Dot-Product Attention\n\\[\\text{Attention}(Q, K, V) = \\text{softmax}\\!\\left(\\frac{QK^\\top}{\\sqrt{d_k}}\\right)V\\]\n\n\\(QK^\\top\\) — similarity between every query and every key\n\\(/ \\sqrt{d_k}\\) — scaling to prevent vanishing gradients from large dot products\n\\(\\text{softmax}\\) — normalise to a probability distribution over positions\n\\(\\times V\\) — weighted sum of value vectors\n\nAll positions are computed in parallel — no sequential dependency."
   },
   {
     "objectID": "example-paper.html#multi-head-attention",
     "href": "example-paper.html#multi-head-attention",
     "title": "Attention Is All You Need",
     "section": "Multi-Head Attention",
-    "text": "Multi-Head Attention\nRunning attention once captures one type of relationship. Multi-head attention runs it \\(h\\) times in parallel with different learned projections.\n\\[\\text{MultiHead}(Q,K,V) = \\text{Concat}(\\text{head}_1, \\ldots, \\text{head}_h)\\,W^O\\]\n\\[\\text{head}_i = \\text{Attention}(QW^Q_i,\\, KW^K_i,\\, VW^V_i)\\]\nThe paper uses \\(h = 8\\) heads with \\(d_k = d_v = 64\\).\nEach head can learn a different aspect of context — syntax, coreference, long-range dependencies — simultaneously."
+    "text": "Multi-Head Attention\nRunning attention once captures one type of relationship.\nMulti-head attention runs it \\(h\\) times with different projections:\n\\[\\text{MultiHead}(Q,K,V) = \\text{Concat}(\\text{head}_1,\\ldots,\\text{head}_h)\\,W^O\\]\n\\[\\text{head}_i = \\text{Attention}(QW^Q_i,\\; KW^K_i,\\; VW^V_i)\\]\nThe paper uses \\(h = 8\\) heads, \\(d_k = d_v = 64\\).\nEach head specialises in a different relationship — syntax, coreference, long-range dependencies — simultaneously."
   },
   {
     "objectID": "example-paper.html#the-transformer-architecture",
     "href": "example-paper.html#the-transformer-architecture",
     "title": "Attention Is All You Need",
     "section": "The Transformer Architecture",
-    "text": "The Transformer Architecture\n\n\nFigure 1 — Full Architecture\n\n\nThe model follows an encoder–decoder design, used here for translation.\n\n\n\nComponent\nLayers\n\n\n\n\nEncoder\n6 identical layers\n\n\nDecoder\n6 identical layers\n\n\n\nEach layer has two sub-layers:\n\nMulti-head self-attention\nPosition-wise feed-forward network (two linear transforms, ReLU in between)\n\nEvery sub-layer wraps a residual connection followed by layer normalisation: \\[\\text{LayerNorm}(x + \\text{Sublayer}(x))\\]"
+    "text": "The Transformer Architecture\n\n\nFigure 1 — Architecture Diagram\n\n\nAn encoder–decoder design with 6 layers each.\nEvery layer wraps each sub-layer with a residual connection + layer norm:\n\\[\\text{Output} = \\text{LayerNorm}(x + \\text{Sublayer}(x))\\]"
   },
   {
-    "objectID": "example-paper.html#encoder-in-detail",
-    "href": "example-paper.html#encoder-in-detail",
+    "objectID": "example-paper.html#encoder",
+    "href": "example-paper.html#encoder",
     "title": "Attention Is All You Need",
-    "section": "Encoder in Detail",
-    "text": "Encoder in Detail\nThe encoder maps an input sequence \\((x_1, \\ldots, x_n)\\) to continuous representations \\(\\mathbf{z} = (z_1, \\ldots, z_n)\\).\nEach of the 6 encoder layers:\nInput embeddings + positional encoding\n        ↓\n[Multi-Head Self-Attention] → Add & Norm\n        ↓\n[Feed-Forward Network]      → Add & Norm\n        ↓\nOutput to next layer (or decoder)\nSelf-attention here is bidirectional — every position can attend to every other position in both directions."
+    "section": "Encoder",
+    "text": "Encoder\nMaps input tokens to continuous representations.\nEach of the 6 encoder layers applies:\ntoken embeddings + positional encoding\n         ↓\n Multi-Head Self-Attention → Add & Norm\n         ↓\n Feed-Forward Network      → Add & Norm\nSelf-attention is bidirectional — every position sees the full sequence."
   },
   {
-    "objectID": "example-paper.html#decoder-in-detail",
-    "href": "example-paper.html#decoder-in-detail",
+    "objectID": "example-paper.html#decoder",
+    "href": "example-paper.html#decoder",
     "title": "Attention Is All You Need",
-    "section": "Decoder in Detail",
-    "text": "Decoder in Detail\nThe decoder generates the output sequence one token at a time.\nEach of the 6 decoder layers has three sub-layers:\nOutput embeddings + positional encoding\n        ↓\n[Masked Multi-Head Self-Attention] → Add & Norm   ← prevents attending to future\n        ↓\n[Cross-Attention over encoder output] → Add & Norm ← connects encoder to decoder\n        ↓\n[Feed-Forward Network]               → Add & Norm\nMasking ensures position \\(i\\) can only attend to positions \\(&lt; i\\), preserving the auto-regressive property during training."
+    "section": "Decoder",
+    "text": "Decoder\nGenerates the output sequence one token at a time.\nEach of the 6 decoder layers applies:\noutput embeddings + positional encoding\n         ↓\n Masked Self-Attention     → Add & Norm\n         ↓\n Cross-Attention (encoder) → Add & Norm\n         ↓\n Feed-Forward Network      → Add & Norm\nMasking prevents position \\(i\\) from attending to positions \\(&gt; i\\).\nCross-attention reads from the encoder’s final representations."
   },
   {
     "objectID": "example-paper.html#positional-encoding",
     "href": "example-paper.html#positional-encoding",
     "title": "Attention Is All You Need",
     "section": "Positional Encoding",
-    "text": "Positional Encoding\nAttention is permutation-invariant — it has no built-in sense of order. Positional encodings inject sequence position information.\nThe paper uses fixed sine and cosine functions:\n\\[PE_{(pos,\\, 2i)}   = \\sin\\!\\left(\\frac{pos}{10000^{2i/d_{\\text{model}}}}\\right)\\] \\[PE_{(pos,\\, 2i+1)} = \\cos\\!\\left(\\frac{pos}{10000^{2i/d_{\\text{model}}}}\\right)\\]\nAdded directly to the token embeddings before the first layer.\nWhy sinusoids? Each frequency allows the model to easily learn to attend by relative position, and the encoding generalises to sequence lengths unseen during training."
+    "text": "Positional Encoding\nAttention is permutation-invariant — no built-in notion of position.\nFixed sinusoidal encodings are added to the input embeddings:\n\\[PE_{(pos,\\,2i)}   = \\sin\\!\\left(\\tfrac{pos}{10000^{2i/d}}\\right)\\] \\[PE_{(pos,\\,2i+1)} = \\cos\\!\\left(\\tfrac{pos}{10000^{2i/d}}\\right)\\]\n\nDifferent frequencies encode different positional scales\nThe model can learn to attend by relative offset\nGeneralises to sequence lengths not seen during training"
   },
   {
-    "objectID": "example-paper.html#training-results",
-    "href": "example-paper.html#training-results",
+    "objectID": "example-paper.html#training",
+    "href": "example-paper.html#training",
     "title": "Attention Is All You Need",
-    "section": "Training & Results",
-    "text": "Training & Results\n\n\n§5 Training\n§6 Results\n\n\nTraining setup:\n\nAdam optimiser with warm-up learning rate schedule\nDropout (rate 0.1) on sub-layer outputs and embeddings\nLabel smoothing (\\(\\epsilon_{ls} = 0.1\\))\nTrained on 8 × P100 GPUs\n\nTranslation benchmarks (WMT 2014):\n\n\n\nTask\nBLEU\nPrevious SOTA\n\n\n\n\nEnglish → German\n28.4\n26.4\n\n\nEnglish → French\n41.0\n40.5\n\n\n\nTrained in 12 hours vs. days for prior ensemble models."
+    "section": "Training",
+    "text": "Training\n\nOptimiser: Adam with a warm-up learning rate schedule\nRegularisation: dropout 0.1 + label smoothing \\(\\epsilon_{ls} = 0.1\\)\nHardware: 8 × P100 GPUs\n\nThe base model trained in 12 hours. Prior ensemble models took days."
+  },
+  {
+    "objectID": "example-paper.html#results",
+    "href": "example-paper.html#results",
+    "title": "Attention Is All You Need",
+    "section": "Results",
+    "text": "Results\nWMT 2014 translation benchmarks:\n\n\n\nTask\nTransformer BLEU\nPrevious SOTA\n\n\n\n\nEnglish → German\n28.4\n26.4\n\n\nEnglish → French\n41.0\n40.5\n\n\n\nNew state of the art on both tasks — at a fraction of the training cost."
   },
   {
     "objectID": "example-paper.html#why-it-mattered",
     "href": "example-paper.html#why-it-mattered",
     "title": "Attention Is All You Need",
     "section": "Why It Mattered",
-    "text": "Why It Mattered\nThe Transformer became the backbone of essentially every major language model that followed.\nDirect descendants:\n\n\n\nModel\nYear\nBuilt on\n\n\n\n\nBERT\n2018\nEncoder only\n\n\nGPT series\n2018–present\nDecoder only\n\n\nT5\n2019\nEncoder–decoder\n\n\nVision Transformer (ViT)\n2020\nEncoder, image patches\n\n\nLLaMA, Mistral, Claude…\n2023–present\nDecoder only\n\n\n\n\nThe self-attention mechanism is now the default building block for sequence modelling across language, vision, audio, and biology.\n\nThe paper has accumulated over 100,000 citations as of 2024."
+    "text": "Why It Mattered\nThe Transformer is now the backbone of nearly every large model.\n\n\n\nModel\nYear\nVariant\n\n\n\n\nBERT\n2018\nEncoder only\n\n\nGPT series\n2018–present\nDecoder only\n\n\nT5\n2019\nEncoder–decoder\n\n\nViT\n2020\nEncoder, image patches\n\n\nLLaMA, Claude…\n2023–present\nDecoder only\n\n\n\nOver 100,000 citations as of 2024."
   },
   {
     "objectID": "index.html",
