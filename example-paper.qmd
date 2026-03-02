@@ -9,24 +9,19 @@ format:
       position: "right"
       width: "45vw"
       mode: "auto"
-      sticky: true
-      global:
-        label: "Paper (HTML)"
-        url: "https://arxiv.org/html/1706.03762v7"
+      sticky: false
 revealjs-plugins:
   - liveurl
 ---
 
-## About this deck
+## About this deck {data-liveurl="https://arxiv.org/html/1706.03762v7"}
 
 These slides summarise [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762)
 (Vaswani et al., NeurIPS 2017) — the paper that introduced the **Transformer**.
 
-The full paper is always one keypress away:
-
-- Press **`u`** to open it in the side panel
-- The panel stays open as you advance through slides (`sticky` mode)
-- Scroll to any section and your position is preserved
+- Press **`u`** to open the paper in the side panel
+- The panel **auto-switches** to the relevant section as you advance
+- Close and reopen on the same slide to restore your scroll position
 
 ## The Problem {data-liveurl="https://arxiv.org/html/1706.03762v7#S1"}
 
@@ -55,7 +50,7 @@ Each token produces three learned vectors:
 Attention computes a weighted sum of Values, where the weights come from
 matching each Query against all Keys.
 
-## Scaled Dot-Product Attention {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2"}
+## Scaled Dot-Product Attention {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS1"}
 
 $$\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V$$
 
@@ -83,15 +78,15 @@ long-range dependencies — simultaneously.
 
 ## The Transformer Architecture {data-liveurl="https://arxiv.org/html/1706.03762v7#S3"}
 
-::: {.liveurl}
-- [Figure 1 — Architecture Diagram](https://arxiv.org/html/1706.03762v7#S3)
-:::
-
 An **encoder–decoder** design with 6 layers each.
 
 Every layer wraps each sub-layer with a residual connection + layer norm:
 
 $$\text{Output} = \text{LayerNorm}(x + \text{Sublayer}(x))$$
+
+::: {.liveurl}
+- [Figure 1 — Architecture Diagram](https://arxiv.org/html/1706.03762v7#S3)
+:::
 
 ## Encoder {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1"}
 
@@ -161,7 +156,7 @@ The base model trained in **12 hours**. Prior ensemble models took days.
 
 New state of the art on both tasks — at a fraction of the training cost.
 
-## Why It Mattered
+## Why It Mattered {data-liveurl="https://arxiv.org/html/1706.03762v7#S7"}
 
 The Transformer is now the backbone of nearly every large model.
 
