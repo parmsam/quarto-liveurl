@@ -134,14 +134,13 @@
 </div>
 
 </section>
-<section id="about-this-deck" class="slide level2">
+<section id="about-this-deck" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7">
 <h2>About this deck</h2>
 <p>These slides summarise <a href="https://arxiv.org/abs/1706.03762"><em>Attention Is All You Need</em></a> (Vaswani et al., NeurIPS 2017) — the paper that introduced the <strong>Transformer</strong>.</p>
-<p>The full paper is always one keypress away:</p>
 <ul>
-<li>Press <strong><code>u</code></strong> to open it in the side panel</li>
-<li>The panel stays open as you advance through slides (<code>sticky</code> mode)</li>
-<li>Scroll to any section and your position is preserved</li>
+<li>Press <strong><code>u</code></strong> to open the paper in the side panel</li>
+<li>The panel <strong>auto-switches</strong> to the relevant section as you advance</li>
+<li>Close and reopen on the same slide to restore your scroll position</li>
 </ul>
 </section>
 <section id="the-problem" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S1">
@@ -184,7 +183,7 @@
 </table>
 <p>Attention computes a weighted sum of Values, where the weights come from matching each Query against all Keys.</p>
 </section>
-<section id="scaled-dot-product-attention" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2">
+<section id="scaled-dot-product-attention" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS1">
 <h2>Scaled Dot-Product Attention</h2>
 <p><span class="math display">\[\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V\]</span></p>
 <ul>
@@ -206,14 +205,14 @@
 </section>
 <section id="the-transformer-architecture" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3">
 <h2>The Transformer Architecture</h2>
+<p>An <strong>encoder–decoder</strong> design with 6 layers each.</p>
+<p>Every layer wraps each sub-layer with a residual connection + layer norm:</p>
+<p><span class="math display">\[\text{Output} = \text{LayerNorm}(x + \text{Sublayer}(x))\]</span></p>
 <div class="liveurl">
 <ul>
 <li><a href="https://arxiv.org/html/1706.03762v7#S3">Figure 1 — Architecture Diagram</a></li>
 </ul>
 </div>
-<p>An <strong>encoder–decoder</strong> design with 6 layers each.</p>
-<p>Every layer wraps each sub-layer with a residual connection + layer norm:</p>
-<p><span class="math display">\[\text{Output} = \text{LayerNorm}(x + \text{Sublayer}(x))\]</span></p>
 </section>
 <section id="encoder" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1">
 <h2>Encoder</h2>
@@ -286,7 +285,7 @@
 </table>
 <p>New state of the art on both tasks — at a fraction of the training cost.</p>
 </section>
-<section id="why-it-mattered" class="slide level2">
+<section id="why-it-mattered" class="slide level2" data-liveurl="https://arxiv.org/html/1706.03762v7#S7">
 <h2>Why It Mattered</h2>
 <p>The Transformer is now the backbone of nearly every large model.</p>
 <table class="caption-top">
@@ -366,7 +365,7 @@
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'liveurl': {"button":true,"shortcut":"u","position":"right","width":"45vw","mode":"auto","openNewTabFallback":true,"rememberLastUrl":true,"global":[{"label":"Paper (HTML)","url":"https://arxiv.org/html/1706.03762v7"}],"sticky":true},
+'liveurl': {"button":true,"shortcut":"u","position":"right","width":"45vw","mode":"auto","openNewTabFallback":true,"rememberLastUrl":true,"global":[],"sticky":false},
 'smaller': false,
  
         // Display controls in the bottom right corner

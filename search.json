@@ -4,7 +4,7 @@
     "href": "example-paper.html#about-this-deck",
     "title": "Attention Is All You Need",
     "section": "About this deck",
-    "text": "About this deck\nThese slides summarise Attention Is All You Need (Vaswani et al., NeurIPS 2017) — the paper that introduced the Transformer.\nThe full paper is always one keypress away:\n\nPress u to open it in the side panel\nThe panel stays open as you advance through slides (sticky mode)\nScroll to any section and your position is preserved"
+    "text": "About this deck\nThese slides summarise Attention Is All You Need (Vaswani et al., NeurIPS 2017) — the paper that introduced the Transformer.\n\nPress u to open the paper in the side panel\nThe panel auto-switches to the relevant section as you advance\nClose and reopen on the same slide to restore your scroll position"
   },
   {
     "objectID": "example-paper.html#the-problem",
@@ -39,7 +39,7 @@
     "href": "example-paper.html#the-transformer-architecture",
     "title": "Attention Is All You Need",
     "section": "The Transformer Architecture",
-    "text": "The Transformer Architecture\n\n\nFigure 1 — Architecture Diagram\n\n\nAn encoder–decoder design with 6 layers each.\nEvery layer wraps each sub-layer with a residual connection + layer norm:\n\\[\\text{Output} = \\text{LayerNorm}(x + \\text{Sublayer}(x))\\]"
+    "text": "The Transformer Architecture\nAn encoder–decoder design with 6 layers each.\nEvery layer wraps each sub-layer with a residual connection + layer norm:\n\\[\\text{Output} = \\text{LayerNorm}(x + \\text{Sublayer}(x))\\]\n\n\nFigure 1 — Architecture Diagram"
   },
   {
     "objectID": "example-paper.html#encoder",
