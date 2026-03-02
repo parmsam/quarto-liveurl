@@ -1,5 +1,6 @@
 ---
 title: "quarto-liveurl"
+format: html
 ---
 
 A Quarto Reveal.js extension for attaching and viewing live URLs during presentations.
