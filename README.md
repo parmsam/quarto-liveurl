@@ -167,15 +167,12 @@ panel header) as a fallback.
 
 ---
 
-## Screenshots
+## Examples
 
-<!-- Add screenshots here -->
+Live demos hosted on GitHub Pages:
 
-### Panel — iframe mode
-<!-- ![iframe mode](screenshots/iframe-mode.png) -->
-
-### Panel — launcher mode
-<!-- ![launcher mode](screenshots/launcher-mode.png) -->
+- [Core Features](https://parmsam.github.io/quarto-liveurl/example.html) — single URL, multiple URLs, launcher, no-URL slides
+- [Sticky & Global URL](https://parmsam.github.io/quarto-liveurl/example-sticky.html) — persistent panel across slide transitions
 
 ---
 
