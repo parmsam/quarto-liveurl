@@ -112,6 +112,13 @@
     "text": "Slide 5 — resetting the panel\n\n\nQuarto Extensions\nQuarto Gallery\n\n\nTry the reset flow here:\n\nPress u to close the panel\nGo back to slide 1 and press u to open (loads the Quarto Guide)\nNavigate back to this slide, close the panel with u\nPress u again — the panel now shows this slide’s URLs above\n\nThe panel always re-renders from the current slide on a fresh open."
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "quarto-liveurl",
+    "section": "",
+    "text": "A Quarto Reveal.js extension for attaching and viewing live URLs during presentations."
+  },
+  {
     "objectID": "index.html#examples",
     "href": "index.html#examples",
     "title": "quarto-liveurl",
