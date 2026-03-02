@@ -14,7 +14,7 @@ revealjs-plugins:
   - liveurl
 ---
 
-## About this deck {data-liveurl="https://arxiv.org/html/1706.03762v7"}
+## About this deck {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7"}
 
 These slides summarise [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762)
 (Vaswani et al., NeurIPS 2017) — the paper that introduced the **Transformer**.
@@ -23,7 +23,7 @@ These slides summarise [*Attention Is All You Need*](https://arxiv.org/abs/1706.
 - The panel **auto-switches** to the relevant section as you advance
 - Close and reopen on the same slide to restore your scroll position
 
-## The Problem {data-liveurl="https://arxiv.org/html/1706.03762v7#S1"}
+## The Problem {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S1"}
 
 Before Transformers, sequence modelling relied on **RNNs and LSTMs**.
 
@@ -37,7 +37,7 @@ Before Transformers, sequence modelling relied on **RNNs and LSTMs**.
 
 Transformers replace recurrence with **attention over the full sequence**.
 
-## Queries, Keys & Values {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2"}
+## Queries, Keys & Values {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2"}
 
 Each token produces three learned vectors:
 
@@ -50,7 +50,7 @@ Each token produces three learned vectors:
 Attention computes a weighted sum of Values, where the weights come from
 matching each Query against all Keys.
 
-## Scaled Dot-Product Attention {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS1"}
+## Scaled Dot-Product Attention {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS1"}
 
 $$\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V$$
 
@@ -61,7 +61,7 @@ $$\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\r
 
 All positions are computed **in parallel** — no sequential dependency.
 
-## Multi-Head Attention {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS2"}
+## Multi-Head Attention {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS2"}
 
 Running attention once captures one type of relationship.
 
@@ -76,7 +76,7 @@ The paper uses **$h = 8$ heads**, $d_k = d_v = 64$.
 Each head specialises in a different relationship — syntax, coreference,
 long-range dependencies — simultaneously.
 
-## The Transformer Architecture {data-liveurl="https://arxiv.org/html/1706.03762v7#S3"}
+## The Transformer Architecture {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S3"}
 
 An **encoder–decoder** design with 6 layers each.
 
@@ -88,7 +88,7 @@ $$\text{Output} = \text{LayerNorm}(x + \text{Sublayer}(x))$$
 - [Figure 1 — Architecture Diagram](https://arxiv.org/html/1706.03762v7#S3)
 :::
 
-## Encoder {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1"}
+## Encoder {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1"}
 
 Maps input tokens to continuous representations.
 
@@ -104,7 +104,7 @@ token embeddings + positional encoding
 
 Self-attention is **bidirectional** — every position sees the full sequence.
 
-## Decoder {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1"}
+## Decoder {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1"}
 
 Generates the output sequence one token at a time.
 
@@ -124,7 +124,7 @@ output embeddings + positional encoding
 
 **Cross-attention** reads from the encoder's final representations.
 
-## Positional Encoding {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS5"}
+## Positional Encoding {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS5"}
 
 Attention is **permutation-invariant** — no built-in notion of position.
 
@@ -137,7 +137,7 @@ $$PE_{(pos,\,2i+1)} = \cos\!\left(\tfrac{pos}{10000^{2i/d}}\right)$$
 - The model can learn to attend by **relative** offset
 - Generalises to sequence lengths not seen during training
 
-## Training {data-liveurl="https://arxiv.org/html/1706.03762v7#S5"}
+## Training {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S5"}
 
 - **Optimiser:** Adam with a warm-up learning rate schedule
 - **Regularisation:** dropout 0.1 + label smoothing $\epsilon_{ls} = 0.1$
@@ -145,7 +145,7 @@ $$PE_{(pos,\,2i+1)} = \cos\!\left(\tfrac{pos}{10000^{2i/d}}\right)$$
 
 The base model trained in **12 hours**. Prior ensemble models took days.
 
-## Results {data-liveurl="https://arxiv.org/html/1706.03762v7#S6"}
+## Results {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S6"}
 
 **WMT 2014 translation benchmarks:**
 
@@ -156,7 +156,7 @@ The base model trained in **12 hours**. Prior ensemble models took days.
 
 New state of the art on both tasks — at a fraction of the training cost.
 
-## Why It Mattered {data-liveurl="https://arxiv.org/html/1706.03762v7#S7"}
+## Why It Mattered {.smaller data-liveurl="https://arxiv.org/html/1706.03762v7#S7"}
 
 The Transformer is now the backbone of nearly every large model.
 
