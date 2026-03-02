@@ -26,173 +26,151 @@ The full paper is always one keypress away:
 
 - Press **`u`** to open it in the side panel
 - The panel stays open as you advance through slides (`sticky` mode)
-- Scroll to any section and your position is preserved across slides
+- Scroll to any section and your position is preserved
 
-## The Problem: Sequential Bottlenecks {data-liveurl="https://arxiv.org/html/1706.03762v7#S1"}
+## The Problem {data-liveurl="https://arxiv.org/html/1706.03762v7#S1"}
 
 Before Transformers, sequence modelling relied on **RNNs and LSTMs**.
 
 **Key limitations:**
 
-- Hidden state $h_t$ depends on $h_{t-1}$ → computation is **inherently sequential**
-- Long sequences → vanishing gradients, forgetting early context
-- Hard to parallelise → slow to train on modern hardware
+- $h_t$ depends on $h_{t-1}$ → inherently **sequential**, hard to parallelise
+- Long sequences → vanishing gradients, early context is forgotten
 
-> *"The dominant sequence transduction models are based on complex recurrent or
-> convolutional neural networks."* — §1
+> *"The dominant sequence transduction models are based on complex recurrent
+> or convolutional neural networks."* — §1
 
-Transformers eliminate recurrence entirely. Every position attends to every
-other position **in parallel**.
+Transformers replace recurrence with **attention over the full sequence**.
 
-## The Core Idea: Self-Attention {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2"}
+## Queries, Keys & Values {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2"}
 
-Instead of passing state through time, each token **directly attends** to all
-other tokens in the sequence.
+Each token produces three learned vectors:
 
-**Three learned projections per token:**
-
-| Matrix | Role |
-|--------|------|
+| Vector | Question it answers |
+|--------|---------------------|
 | **Q** (Query) | What am I looking for? |
-| **K** (Key)   | What do I offer? |
+| **K** (Key)   | What do I offer others? |
 | **V** (Value) | What do I contribute if selected? |
 
-**Scaled dot-product attention:**
+Attention computes a weighted sum of Values, where the weights come from
+matching each Query against all Keys.
+
+## Scaled Dot-Product Attention {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2"}
 
 $$\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V$$
 
-The $\sqrt{d_k}$ scaling prevents the dot products from growing too large and
-pushing softmax into regions of tiny gradients.
+- $QK^\top$ — similarity between every query and every key
+- $/ \sqrt{d_k}$ — scaling to prevent vanishing gradients from large dot products
+- $\text{softmax}$ — normalise to a probability distribution over positions
+- $\times V$ — weighted sum of value vectors
+
+All positions are computed **in parallel** — no sequential dependency.
 
 ## Multi-Head Attention {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS2.SSS2"}
 
-Running attention once captures one type of relationship. **Multi-head attention**
-runs it $h$ times in parallel with different learned projections.
+Running attention once captures one type of relationship.
 
-$$\text{MultiHead}(Q,K,V) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)\,W^O$$
+**Multi-head attention** runs it $h$ times with different projections:
 
-$$\text{head}_i = \text{Attention}(QW^Q_i,\, KW^K_i,\, VW^V_i)$$
+$$\text{MultiHead}(Q,K,V) = \text{Concat}(\text{head}_1,\ldots,\text{head}_h)\,W^O$$
 
-**The paper uses $h = 8$ heads** with $d_k = d_v = 64$.
+$$\text{head}_i = \text{Attention}(QW^Q_i,\; KW^K_i,\; VW^V_i)$$
 
-Each head can learn a different aspect of context — syntax, coreference,
+The paper uses **$h = 8$ heads**, $d_k = d_v = 64$.
+
+Each head specialises in a different relationship — syntax, coreference,
 long-range dependencies — simultaneously.
 
 ## The Transformer Architecture {data-liveurl="https://arxiv.org/html/1706.03762v7#S3"}
 
 ::: {.liveurl}
-- [Figure 1 — Full Architecture](https://arxiv.org/html/1706.03762v7#S3)
+- [Figure 1 — Architecture Diagram](https://arxiv.org/html/1706.03762v7#S3)
 :::
 
-The model follows an **encoder–decoder** design, used here for translation.
+An **encoder–decoder** design with 6 layers each.
 
-| Component | Layers |
-|-----------|--------|
-| Encoder | 6 identical layers |
-| Decoder | 6 identical layers |
+Every layer wraps each sub-layer with a residual connection + layer norm:
 
-Each layer has two sub-layers:
+$$\text{Output} = \text{LayerNorm}(x + \text{Sublayer}(x))$$
 
-1. **Multi-head self-attention**
-2. **Position-wise feed-forward network** (two linear transforms, ReLU in between)
+## Encoder {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1"}
 
-Every sub-layer wraps a **residual connection** followed by **layer normalisation**:
-$$\text{LayerNorm}(x + \text{Sublayer}(x))$$
+Maps input tokens to continuous representations.
 
-## Encoder in Detail {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1"}
-
-The encoder maps an input sequence $(x_1, \ldots, x_n)$ to continuous
-representations $\mathbf{z} = (z_1, \ldots, z_n)$.
-
-**Each of the 6 encoder layers:**
+Each of the **6 encoder layers** applies:
 
 ```
-Input embeddings + positional encoding
-        ↓
-[Multi-Head Self-Attention] → Add & Norm
-        ↓
-[Feed-Forward Network]      → Add & Norm
-        ↓
-Output to next layer (or decoder)
+token embeddings + positional encoding
+         ↓
+ Multi-Head Self-Attention → Add & Norm
+         ↓
+ Feed-Forward Network      → Add & Norm
 ```
 
-Self-attention here is **bidirectional** — every position can attend to
-every other position in both directions.
+Self-attention is **bidirectional** — every position sees the full sequence.
 
-## Decoder in Detail {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1"}
+## Decoder {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS1"}
 
-The decoder generates the output sequence one token at a time.
+Generates the output sequence one token at a time.
 
-**Each of the 6 decoder layers has three sub-layers:**
+Each of the **6 decoder layers** applies:
 
 ```
-Output embeddings + positional encoding
-        ↓
-[Masked Multi-Head Self-Attention] → Add & Norm   ← prevents attending to future
-        ↓
-[Cross-Attention over encoder output] → Add & Norm ← connects encoder to decoder
-        ↓
-[Feed-Forward Network]               → Add & Norm
+output embeddings + positional encoding
+         ↓
+ Masked Self-Attention     → Add & Norm
+         ↓
+ Cross-Attention (encoder) → Add & Norm
+         ↓
+ Feed-Forward Network      → Add & Norm
 ```
 
-**Masking** ensures position $i$ can only attend to positions $< i$,
-preserving the auto-regressive property during training.
+**Masking** prevents position $i$ from attending to positions $> i$.
+
+**Cross-attention** reads from the encoder's final representations.
 
 ## Positional Encoding {data-liveurl="https://arxiv.org/html/1706.03762v7#S3.SS5"}
 
-Attention is **permutation-invariant** — it has no built-in sense of order.
-Positional encodings inject sequence position information.
+Attention is **permutation-invariant** — no built-in notion of position.
 
-The paper uses fixed sine and cosine functions:
+Fixed sinusoidal encodings are added to the input embeddings:
 
-$$PE_{(pos,\, 2i)}   = \sin\!\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)$$
-$$PE_{(pos,\, 2i+1)} = \cos\!\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)$$
+$$PE_{(pos,\,2i)}   = \sin\!\left(\tfrac{pos}{10000^{2i/d}}\right)$$
+$$PE_{(pos,\,2i+1)} = \cos\!\left(\tfrac{pos}{10000^{2i/d}}\right)$$
 
-Added directly to the token embeddings before the first layer.
+- Different frequencies encode different positional scales
+- The model can learn to attend by **relative** offset
+- Generalises to sequence lengths not seen during training
 
-**Why sinusoids?** Each frequency allows the model to easily learn to attend
-by relative position, and the encoding generalises to sequence lengths unseen
-during training.
+## Training {data-liveurl="https://arxiv.org/html/1706.03762v7#S5"}
 
-## Training & Results {data-liveurl="https://arxiv.org/html/1706.03762v7#S5"}
+- **Optimiser:** Adam with a warm-up learning rate schedule
+- **Regularisation:** dropout 0.1 + label smoothing $\epsilon_{ls} = 0.1$
+- **Hardware:** 8 × P100 GPUs
 
-::: {.liveurl}
-- [§5 Training](https://arxiv.org/html/1706.03762v7#S5)
-- [§6 Results](https://arxiv.org/html/1706.03762v7#S6)
-:::
+The base model trained in **12 hours**. Prior ensemble models took days.
 
-**Training setup:**
+## Results {data-liveurl="https://arxiv.org/html/1706.03762v7#S6"}
 
-- Adam optimiser with warm-up learning rate schedule
-- Dropout (rate 0.1) on sub-layer outputs and embeddings
-- Label smoothing ($\epsilon_{ls} = 0.1$)
-- Trained on 8 × P100 GPUs
+**WMT 2014 translation benchmarks:**
 
-**Translation benchmarks (WMT 2014):**
-
-| Task | BLEU | Previous SOTA |
-|------|------|---------------|
+| Task | Transformer BLEU | Previous SOTA |
+|------|:---:|:---:|
 | English → German | **28.4** | 26.4 |
 | English → French | **41.0** | 40.5 |
 
-Trained in **12 hours** vs. days for prior ensemble models.
+New state of the art on both tasks — at a fraction of the training cost.
 
 ## Why It Mattered
 
-The Transformer became the backbone of essentially every major language model
-that followed.
+The Transformer is now the backbone of nearly every large model.
 
-**Direct descendants:**
-
-| Model | Year | Built on |
-|-------|------|----------|
+| Model | Year | Variant |
+|-------|------|---------|
 | BERT | 2018 | Encoder only |
 | GPT series | 2018–present | Decoder only |
 | T5 | 2019 | Encoder–decoder |
-| Vision Transformer (ViT) | 2020 | Encoder, image patches |
-| LLaMA, Mistral, Claude… | 2023–present | Decoder only |
+| ViT | 2020 | Encoder, image patches |
+| LLaMA, Claude… | 2023–present | Decoder only |
 
-> *The self-attention mechanism is now the default building block for
-> sequence modelling across language, vision, audio, and biology.*
-
-The paper has accumulated over **100,000 citations** as of 2024.
+Over **100,000 citations** as of 2024.
