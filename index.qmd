@@ -9,3 +9,4 @@ A Quarto Reveal.js extension for attaching and viewing live URLs during presenta
 - [Core Features](example.html){target="_blank" rel="noopener noreferrer"} — single URL, multiple URLs, launcher, no-URL slides
 - [Sticky & Global URL](example-sticky.html){target="_blank" rel="noopener noreferrer"} — persistent panel across slide transitions
 - [Paper Summary](example-paper.html){target="_blank" rel="noopener noreferrer"} — "Attention Is All You Need" with the full paper open in the panel
+- [Agenda Chat](example-chat.html){target="_blank" rel="noopener noreferrer"} — Posit Conf 2025 RAG chat app as a persistent slide companion

@@ -1,0 +1,87 @@
+---
+title: "Posit Conf 2025 — Agenda Chat"
+subtitle: "A weekend RAG project in R"
+format:
+  revealjs:
+    liveurl:
+      button: true
+      shortcut: "u"
+      position: "right"
+      width: "46vw"
+      mode: "auto"
+      openNewTabFallback: true
+      sticky: true
+      global:
+        - label: "Posit Conf 2025 Chat"
+          url: "https://posit-ai-posit-conf-agenda-chat.share.connect.posit.cloud/"
+revealjs-plugins:
+  - liveurl
+---
+
+## About this deck {.smaller}
+
+These slides walk through a Shiny chat app built for the **Posit Conf 2025** agenda.
+
+Press **`u`** to open the live app alongside the slides.
+
+> **Note:** The app is hosted on Posit Connect Cloud. If it doesn't embed,
+> use ↗ in the panel header to open it in a new tab.
+
+## About Posit Conf 2025 {.smaller}
+
+**Posit Conf** (formerly rstudio::conf) is the flagship annual event for the
+R and Python open-source data science community.
+
+- Hosted by [Posit PBC](https://posit.co) — makers of RStudio, Quarto, Shiny
+- Sessions span keynotes, workshops, and lightning talks across two days
+
+The 2025 edition featured sessions on:
+
+- **AI + data science tooling** — LLMs, RAG, vector stores
+- **Quarto** — reproducible documents and presentations
+- **Shiny** — interactive web apps in R and Python
+- **Community** — diversity, open source, collaboration
+
+## The app {.smaller}
+
+Attendees can explore the conference schedule through natural conversation
+instead of digging through a static agenda page.
+
+- *"What sessions are about LLMs or AI?"*
+- *"Who is speaking about Quarto?"*
+- *"What workshops are available on day 1?"*
+- *"Give me a summary of the keynotes."*
+
+The assistant retrieves relevant session chunks from a vector store and
+generates a grounded answer — it won't hallucinate sessions.
+
+## How it was built {.smaller}
+
+A three-stage **RAG pipeline** built entirely in R over a weekend:
+
+```
+Conference website
+        ↓  (web scraping with rvest)
+  Structured agenda data
+        ↓  (ragnar: chunk + embed + store)
+  Vector store index
+        ↓  (ellmer: retrieval + LLM)
+  Shiny chat UI  ←→  User
+```
+
+Deployed to **Posit Connect Cloud**.
+
+## Key packages {.smaller}
+
+| Package | Role |
+|---------|------|
+| [`shinychat`](https://posit-dev.github.io/shinychat/) | Streaming chat UI component for Shiny |
+| [`ellmer`](https://ellmer.tidyverse.org/) | Unified LLM client (OpenAI, Anthropic, …) |
+| [`ragnar`](https://ragnar.tidyverse.org/) | RAG framework: chunking, embedding, retrieval |
+| [`rvest`](https://rvest.tidyverse.org/) | Web scraping for the agenda data |
+
+::: {.liveurl}
+- [shinychat docs](https://posit-dev.github.io/shinychat/)
+- [ellmer docs](https://ellmer.tidyverse.org/)
+- [ragnar docs](https://ragnar.tidyverse.org/)
+:::
