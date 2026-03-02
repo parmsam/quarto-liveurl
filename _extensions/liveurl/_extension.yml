@@ -6,7 +6,6 @@ contributes:
   revealjs-plugins:
     - name: RevealLiveURL
       script:
-        - qrcode.min.js   # QR support: replace with real qrcodejs if qr: true
         - liveurl.js
       stylesheet:
         - liveurl.css
@@ -19,6 +18,5 @@ contributes:
           mode: "auto"            # auto | iframe | launcher
           openNewTabFallback: true
           rememberLastUrl: true
-          qr: false
           global: []            # presentation-level URL(s), available on every slide
           sticky: false         # keep panel content alive across slide transitions

@@ -8,7 +8,7 @@
  *                                   :::
  *
  * Config (via _extension.yml or revealjs.liveurl in YAML front matter):
- *   button, shortcut, position, width, mode, openNewTabFallback, rememberLastUrl, qr, global
+ *   button, shortcut, position, width, mode, openNewTabFallback, rememberLastUrl, global, sticky
  *
  * Global URL (available on every slide):
  *   liveurl:
@@ -35,7 +35,6 @@ window.RevealLiveURL = function () {
         mode:               options.mode               || "auto",
         openNewTabFallback: options.openNewTabFallback !== undefined ? options.openNewTabFallback : true,
         rememberLastUrl:    options.rememberLastUrl    !== undefined ? options.rememberLastUrl    : true,
-        qr:                 options.qr                || false,
         // sticky: keep the panel content unchanged on slide transitions so
         // stateful pages (LLM chats, live apps) aren't destroyed mid-presentation.
         // Re-renders normally when the panel is closed and re-opened.
@@ -373,24 +372,6 @@ window.RevealLiveURL = function () {
           row.className = "liveurl-launcher-row";
           row.append(linkBtn, extBtn);
           item.appendChild(row);
-
-          // QR code (optional — requires QRCode global from bundled qrcode.min.js)
-          if (settings.qr && typeof window.QRCode !== "undefined") {
-            const qrWrap = document.createElement("div");
-            qrWrap.className = "liveurl-qr";
-            try {
-              new window.QRCode(qrWrap, {
-                text:       u.url,
-                width:      128,
-                height:     128,
-                colorDark:  "#000000",
-                colorLight: "#ffffff",
-              });
-            } catch (e) {
-              console.warn("[liveurl] QR generation failed:", e);
-            }
-            item.appendChild(qrWrap);
-          }
 
           if (i === 0 && activeUrl === null) activeUrl = u.url;
           list.appendChild(item);

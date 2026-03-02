@@ -25,7 +25,6 @@ Live demos on GitHub Pages:
 - **"Open in new tab"** fallback for sites that block iframe embedding
 - **Slide badge** indicator on slides that have attached URLs
 - **localStorage** persistence for the last-visited URL (opt-out available)
-- **Optional QR code** in launcher mode
 - No external CDN dependencies at runtime
 
 ---
@@ -133,7 +132,6 @@ All options go under `liveurl:` in your front matter.
 | `mode`               | `"auto"` | `auto` (1 URL → iframe, many → launcher), `iframe`, or `launcher`         |
 | `openNewTabFallback` | `true`   | Show "Open in new tab" button in the panel header                         |
 | `rememberLastUrl`    | `true`   | Persist last-clicked URL in localStorage — [see warning](#localstorage-warning) |
-| `qr`                 | `false`  | Render QR codes in launcher mode (requires qrcode.min.js)                 |
 | `global`             | `[]`     | URL(s) available on every slide — string, `{label, url}`, or array        |
 | `sticky`             | `false`  | Preserve panel content across slide transitions                           |
 
@@ -150,7 +148,6 @@ format:
       mode: "auto"
       openNewTabFallback: true
       rememberLastUrl: true
-      qr: false
       sticky: false
       global:
         - label: "Paper"
@@ -202,18 +199,6 @@ localStorage.removeItem('liveurl:' + location.pathname)
 Many sites (GitHub, Google, Twitter, etc.) send `X-Frame-Options: DENY` headers that prevent iframe embedding. This is a browser security feature the extension cannot override.
 
 When a site blocks embedding, use the **"Open in new tab" (↗)** button in the panel header. A small "Can't see it?" hint also appears below the iframe.
-
----
-
-## QR code support
-
-QR code rendering requires the [qrcodejs](https://github.com/davidshimjs/qrcodejs) library:
-
-1. Download `qrcode.min.js` from the [qrcodejs releases page](https://github.com/davidshimjs/qrcodejs)
-2. Replace `_extensions/liveurl/qrcode.min.js` with the downloaded file
-3. Set `qr: true` in your front matter
-
-The plugin skips QR rendering gracefully if the library is absent.
 
 ---
 

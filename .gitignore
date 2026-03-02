@@ -4,3 +4,5 @@ example-sticky.html
 example-sticky_files/
 .quarto/
 _site/
+
+/.quarto/

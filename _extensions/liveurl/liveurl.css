@@ -265,20 +265,6 @@
   padding-top: 6px;
 }
 
-/* ── QR code (optional) ─────────────────────────────────────── */
-.liveurl-qr {
-  display: flex;
-  justify-content: center;
-  padding-top: 10px;
-}
-
-.liveurl-qr canvas,
-.liveurl-qr img {
-  border-radius: 5px;
-  max-width: 128px;
-  height: auto;
-}
-
 /* ── Toolbar toggle button ───────────────────────────────────── */
 .liveurl-toolbar-btn {
   position: absolute;
