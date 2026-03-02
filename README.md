@@ -1,5 +1,9 @@
 # quarto-liveurl
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-live-blue?logo=github)](https://parmsam.github.io/quarto-liveurl/)
+[![Quarto](https://img.shields.io/badge/Quarto-%3E%3D1.4.0-blue?logo=quarto)](https://quarto.org)
+
 A Quarto Reveal.js extension for attaching and viewing live URLs during presentations.
 
 Attach one or more URLs to any slide. Toggle a side panel with a toolbar button or keyboard shortcut to browse URLs inline — the slide reflows to make room so nothing is covered.
