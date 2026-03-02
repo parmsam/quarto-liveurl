@@ -2,6 +2,10 @@ project:
   type: website
   output-dir: _site
 
+format:
+  revealjs:
+    footer: "[quarto-liveurl](https://parmsam.github.io/quarto-liveurl/)"
+
 website:
   title: "quarto-liveurl"
   navbar:
@@ -16,3 +20,7 @@ website:
         text: Paper Summary
       - href: example-chat.qmd
         text: Agenda Chat
+    right:
+      - icon: github
+        href: https://github.com/parmsam/quarto-liveurl
+        aria-label: GitHub
