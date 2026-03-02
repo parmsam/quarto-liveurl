@@ -18,7 +18,7 @@
     "href": "example-chat.html#the-app",
     "title": "Posit Conf 2025 — Agenda Chat",
     "section": "The app",
-    "text": "The app\nAttendees can explore the conference schedule through natural conversation instead of digging through a static agenda page.\n\n“What sessions are about LLMs or AI?”\n“Who is speaking about Quarto?”\n“What workshops are available on day 1?”\n“Give me a summary of the keynotes.”\n\nThe assistant retrieves relevant session chunks from a vector store and generates a grounded answer — it won’t hallucinate sessions."
+    "text": "The app\nAttendees can explore the conference schedule through natural conversation instead of digging through a static agenda page.\n\n“What sessions are about LLMs or AI?”\n“Who is speaking about Quarto?”\n“What workshops are available on day 1?”\n“Give me a summary of the keynotes.”\n\nThe assistant retrieves relevant session chunks from a vector store and generates a grounded answer — it’s less likely to hallucinate sessions, though errors are still possible."
   },
   {
     "objectID": "example-chat.html#how-it-was-built",
