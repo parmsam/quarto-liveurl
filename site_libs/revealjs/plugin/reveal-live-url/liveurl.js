@@ -8,7 +8,7 @@
  *                                   :::
  *
  * Config (via _extension.yml or revealjs.liveurl in YAML front matter):
- *   button, shortcut, position, width, mode, openNewTabFallback, rememberLastUrl, qr, global
+ *   button, shortcut, position, width, mode, openNewTabFallback, rememberLastUrl, global, sticky
  *
  * Global URL (available on every slide):
  *   liveurl:
@@ -35,7 +35,6 @@ window.RevealLiveURL = function () {
         mode:               options.mode               || "auto",
         openNewTabFallback: options.openNewTabFallback !== undefined ? options.openNewTabFallback : true,
         rememberLastUrl:    options.rememberLastUrl    !== undefined ? options.rememberLastUrl    : true,
-        qr:                 options.qr                || false,
         // sticky: keep the panel content unchanged on slide transitions so
         // stateful pages (LLM chats, live apps) aren't destroyed mid-presentation.
         // Re-renders normally when the panel is closed and re-opened.
@@ -70,9 +69,10 @@ window.RevealLiveURL = function () {
       }
 
       // ── Plugin state ────────────────────────────────────────────────────────
-      let panelOpen  = false;
+      let panelOpen   = false;
       let currentUrls = [];
       let activeUrl   = null;
+      let currentView = "launcher"; // "launcher" | "iframe"
 
       // ── Build drawer DOM ────────────────────────────────────────────────────
       const revealEl = document.querySelector(".reveal");
@@ -110,7 +110,11 @@ window.RevealLiveURL = function () {
       );
       newTabBtn.id = "liveurl-newtab-btn";
       newTabBtn.addEventListener("click", () => {
-        if (activeUrl) openTab(activeUrl);
+        if (currentView === "launcher") {
+          currentUrls.forEach((u) => openTab(u.url));
+        } else if (activeUrl) {
+          openTab(activeUrl);
+        }
       });
 
       // Close button
@@ -178,6 +182,10 @@ window.RevealLiveURL = function () {
         drawer.setAttribute("aria-hidden", "false");
         setToolbarActive(true);
         adjustRevealLayout(true);
+        // Always re-render on open so closing + reopening reflects the current
+        // slide's URLs — important for sticky mode where slide changes don't
+        // touch the panel content while it's open.
+        renderPanel(currentUrls);
       }
 
       function closePanel() {
@@ -274,9 +282,12 @@ window.RevealLiveURL = function () {
       // ── Iframe renderer ─────────────────────────────────────────────────────
       function renderIframe(url, label) {
         activeUrl = url;
+        currentView = "iframe";
         drawerContent.innerHTML = "";
         // Show back button only when there's a launcher to return to
         backBtn.style.display = currentUrls.length > 1 ? "" : "none";
+        newTabBtn.title = "Open in new tab";
+        newTabBtn.setAttribute("aria-label", "Open in new tab");
 
         const wrapper = document.createElement("div");
         wrapper.className = "liveurl-iframe-wrapper";
@@ -304,7 +315,10 @@ window.RevealLiveURL = function () {
       // ── Launcher renderer ───────────────────────────────────────────────────
       function renderLauncher(urls) {
         backBtn.style.display = "none";
+        currentView = "launcher";
         drawerContent.innerHTML = "";
+        newTabBtn.title = "Open all in new tabs";
+        newTabBtn.setAttribute("aria-label", "Open all in new tabs");
         const slideList  = urls.filter((u) => u.source !== "global");
         const globalList = urls.filter((u) => u.source === "global");
         const hasBoth    = slideList.length > 0 && globalList.length > 0;
@@ -373,24 +387,6 @@ window.RevealLiveURL = function () {
           row.className = "liveurl-launcher-row";
           row.append(linkBtn, extBtn);
           item.appendChild(row);
-
-          // QR code (optional — requires QRCode global from bundled qrcode.min.js)
-          if (settings.qr && typeof window.QRCode !== "undefined") {
-            const qrWrap = document.createElement("div");
-            qrWrap.className = "liveurl-qr";
-            try {
-              new window.QRCode(qrWrap, {
-                text:       u.url,
-                width:      128,
-                height:     128,
-                colorDark:  "#000000",
-                colorLight: "#ffffff",
-              });
-            } catch (e) {
-              console.warn("[liveurl] QR generation failed:", e);
-            }
-            item.appendChild(qrWrap);
-          }
 
           if (i === 0 && activeUrl === null) activeUrl = u.url;
           list.appendChild(item);
