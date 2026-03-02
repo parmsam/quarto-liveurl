@@ -267,7 +267,7 @@
 
 /* ── Toolbar toggle button ───────────────────────────────────── */
 .liveurl-toolbar-btn {
-  position: absolute;
+  position: fixed;
   top: 16px;
   right: 16px;
   width: 36px;
