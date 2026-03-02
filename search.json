@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "example.html#what-is-quarto-liveurl",
+    "href": "example.html#what-is-quarto-liveurl",
+    "title": "quarto-liveurl — Core Features",
+    "section": "What is quarto-liveurl?",
+    "text": "What is quarto-liveurl?\n\nAttach live URLs to individual slides\nToggle an overlay panel with u or the link button (top-right). You can try it on the next slide! It’s disabled on this one since there are no URLs attached.\nPanel sits beside the slide — it doesn’t cover it\nWorks in iframe embed mode or as a link launcher"
+  },
+  {
+    "objectID": "example.html#single-url-header-shorthand",
+    "href": "example.html#single-url-header-shorthand",
+    "title": "quarto-liveurl — Core Features",
+    "section": "Single URL — header shorthand",
+    "text": "Single URL — header shorthand\nAdd data-liveurl=\"...\" to any slide header to attach one URL.\nPress u — the panel opens and loads the page in an iframe.\n\nNote: some sites block iframe embedding. Use the ↗ button in the panel header to open in a new tab as a fallback."
+  },
+  {
+    "objectID": "example.html#multiple-urls-block-syntax",
+    "href": "example.html#multiple-urls-block-syntax",
+    "title": "quarto-liveurl — Core Features",
+    "section": "Multiple URLs — block syntax",
+    "text": "Multiple URLs — block syntax\n\n\nQuarto Presentations\nReveal.js Docs\nQuarto Extensions\n\n\nThree URLs → launcher list in auto mode.\nClick a label to load it in the iframe. Use ← in the panel header to return to this list."
+  },
+  {
+    "objectID": "example.html#both-slide-and-global-urls",
+    "href": "example.html#both-slide-and-global-urls",
+    "title": "quarto-liveurl — Core Features",
+    "section": "Both slide and global URLs",
+    "text": "Both slide and global URLs\n\n\nQuarto Gallery\n\n\nWhen a slide has URLs and liveurl.global is set, the launcher shows two sections: “This slide” and “Presentation”.\n(No global URL is set in this file — see example-sticky.qmd for that.)"
+  },
+  {
+    "objectID": "example.html#no-urls-on-this-slide",
+    "href": "example.html#no-urls-on-this-slide",
+    "title": "quarto-liveurl — Core Features",
+    "section": "No URLs on this slide",
+    "text": "No URLs on this slide\nThis slide has no data-liveurl attribute and no .liveurl block.\nThe link button (top-right) is dimmed and pressing u does nothing. Navigate to another slide to re-enable it."
+  },
+  {
+    "objectID": "example.html#persistent-memory",
+    "href": "example.html#persistent-memory",
+    "title": "quarto-liveurl — Core Features",
+    "section": "Persistent memory",
+    "text": "Persistent memory\n\n\nQuarto Presentations\nReveal.js Docs\nQuarto Extensions\n\n\nrememberLastUrl: true (the default) stores the last URL you clicked, keyed to the presentation file path.\nTry it: click one of the links above, close the panel, then reopen it — the same URL loads automatically."
+  },
+  {
+    "objectID": "example-sticky.html#sticky-global-url-mode",
+    "href": "example-sticky.html#sticky-global-url-mode",
+    "title": "quarto-liveurl — Sticky & Global URL",
+    "section": "Sticky + Global URL mode",
+    "text": "Sticky + Global URL mode\nThis presentation has two special settings:\n\nsticky: true — the panel content is preserved across slide transitions\nliveurl.global — a URL available on every slide\n\nTry it: Press u to open the panel, scroll down in the page, then navigate to the next slide. The page stays exactly where you left it."
+  },
+  {
+    "objectID": "example-sticky.html#slide-2-panel-still-showing-your-page",
+    "href": "example-sticky.html#slide-2-panel-still-showing-your-page",
+    "title": "quarto-liveurl — Sticky & Global URL",
+    "section": "Slide 2 — panel still showing your page",
+    "text": "Slide 2 — panel still showing your page\nThe Quarto Guide is still loaded in the panel at the same scroll position.\nNavigate freely — the page won’t reload until you close and reopen the panel.\n\n\nPresentations Overview\n\n\nThis slide also has its own URL. The panel won’t switch to it automatically while sticky: true. Close and reopen the panel to load the new URL list."
+  },
+  {
+    "objectID": "example-sticky.html#slide-3-no-slide-specific-urls",
+    "href": "example-sticky.html#slide-3-no-slide-specific-urls",
+    "title": "quarto-liveurl — Sticky & Global URL",
+    "section": "Slide 3 — no slide-specific URLs",
+    "text": "Slide 3 — no slide-specific URLs\nNo data-liveurl or .liveurl block here.\nThe global URL is still accessible — the link button stays fully active on every slide because liveurl.global is set.\nWith sticky: true, the panel continues showing whatever was already loaded."
+  },
+  {
+    "objectID": "example-sticky.html#slide-4-when-to-use-sticky",
+    "href": "example-sticky.html#slide-4-when-to-use-sticky",
+    "title": "quarto-liveurl — Sticky & Global URL",
+    "section": "Slide 4 — when to use sticky",
+    "text": "Slide 4 — when to use sticky\nGood use cases for sticky: true:\n\nLLM chat sessions — keep context as you walk through slides\nLive dashboards — don’t interrupt auto-refresh or streaming data\nInteractive apps — preserve user state (form inputs, selections)\nReference docs — let the audience read at their own pace while you advance"
+  },
+  {
+    "objectID": "example-sticky.html#slide-5-resetting-the-panel",
+    "href": "example-sticky.html#slide-5-resetting-the-panel",
+    "title": "quarto-liveurl — Sticky & Global URL",
+    "section": "Slide 5 — resetting the panel",
+    "text": "Slide 5 — resetting the panel\n\n\nQuarto Extensions\nQuarto Gallery\n\n\nTry the reset flow here:\n\nPress u to close the panel\nGo back to slide 1 and press u to open (loads the Quarto Guide)\nNavigate back to this slide, close the panel with u\nPress u again — the panel now shows this slide’s URLs above\n\nThe panel always re-renders from the current slide on a fresh open."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "quarto-liveurl",
+    "section": "",
+    "text": "A Quarto Reveal.js extension for attaching and viewing live URLs during presentations."
+  },
+  {
+    "objectID": "index.html#examples",
+    "href": "index.html#examples",
+    "title": "quarto-liveurl",
+    "section": "Examples",
+    "text": "Examples\n\nCore Features — single URL, multiple URLs, launcher, no-URL slides\nSticky & Global URL — persistent panel across slide transitions"
+  }
+]
