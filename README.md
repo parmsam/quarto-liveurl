@@ -10,6 +10,7 @@ Live demos on GitHub Pages:
 
 - [Core Features](https://parmsam.github.io/quarto-liveurl/example.html) — single URL, multiple URLs, launcher, no-URL slides
 - [Sticky & Global URL](https://parmsam.github.io/quarto-liveurl/example-sticky.html) — persistent panel across slide transitions
+- [Paper Summary](https://parmsam.github.io/quarto-liveurl/example-paper.html) — "Attention Is All You Need" summarised with the full paper open in the panel
 
 ---
 
