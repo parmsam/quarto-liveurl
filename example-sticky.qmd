@@ -1,0 +1,75 @@
+---
+title: "quarto-liveurl — Sticky & Global URL"
+format:
+  revealjs:
+    liveurl:
+      button: true
+      shortcut: "u"
+      position: "right"
+      width: "44vw"
+      mode: "auto"
+      openNewTabFallback: true
+      sticky: true
+      global:
+        - label: "Quarto Guide"
+          url: "https://quarto.org/docs/guide/"
+revealjs-plugins:
+  - liveurl
+---
+
+## Sticky + Global URL mode
+
+This presentation has two special settings:
+
+- **`sticky: true`** — the panel content is preserved across slide transitions
+- **`liveurl.global`** — a URL available on every slide
+
+**Try it:** Press **`u`** to open the panel, scroll down in the page,
+then navigate to the next slide. The page stays exactly where you left it.
+
+## Slide 2 — panel still showing your page
+
+The Quarto Guide is still loaded in the panel at the same scroll position.
+
+Navigate freely — the page won't reload until you **close and reopen** the panel.
+
+::: {.liveurl}
+- [Presentations Overview](https://quarto.org/docs/presentations/)
+:::
+
+This slide also has its own URL. The panel won't switch to it automatically
+while `sticky: true`. Close and reopen the panel to load the new URL list.
+
+## Slide 3 — no slide-specific URLs
+
+No `data-liveurl` or `.liveurl` block here.
+
+The **global URL is still accessible** — the link button stays fully active on
+every slide because `liveurl.global` is set.
+
+With `sticky: true`, the panel continues showing whatever was already loaded.
+
+## Slide 4 — when to use sticky
+
+Good use cases for `sticky: true`:
+
+- **LLM chat sessions** — keep context as you walk through slides
+- **Live dashboards** — don't interrupt auto-refresh or streaming data
+- **Interactive apps** — preserve user state (form inputs, selections)
+- **Reference docs** — let the audience read at their own pace while you advance
+
+## Slide 5 — resetting the panel
+
+::: {.liveurl}
+- [Quarto Extensions](https://quarto.org/docs/extensions/)
+- [Quarto Gallery](https://quarto.org/docs/gallery/)
+:::
+
+**Try the reset flow here:**
+
+1. Press **`u`** to close the panel
+2. Go back to slide 1 and press **`u`** to open (loads the Quarto Guide)
+3. Navigate back to this slide, close the panel with **`u`**
+4. Press **`u`** again — the panel now shows **this slide's URLs** above
+
+The panel always re-renders from the current slide on a fresh open.

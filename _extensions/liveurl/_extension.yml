@@ -1,0 +1,24 @@
+title: LiveURL
+author: samparmar
+version: 0.1.0
+quarto-required: ">=1.4.0"
+contributes:
+  revealjs-plugins:
+    - name: RevealLiveURL
+      script:
+        - qrcode.min.js   # QR support: replace with real qrcodejs if qr: true
+        - liveurl.js
+      stylesheet:
+        - liveurl.css
+      config:
+        liveurl:
+          button: true
+          shortcut: "u"
+          position: "right"       # right | left | full
+          width: "42vw"
+          mode: "auto"            # auto | iframe | launcher
+          openNewTabFallback: true
+          rememberLastUrl: true
+          qr: false
+          global: []            # presentation-level URL(s), available on every slide
+          sticky: false         # keep panel content alive across slide transitions

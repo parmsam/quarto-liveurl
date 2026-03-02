@@ -1,0 +1,336 @@
+/* ============================================================
+   liveurl.css — styles for the quarto-liveurl Reveal.js plugin
+   ============================================================ */
+
+/* ── Hide .liveurl data divs from slide content ─────────────── */
+/* Pandoc renders ::: {.liveurl} as a <div class="liveurl">.
+   The JS reads the <a> links from it; the div itself should be invisible. */
+.reveal div.liveurl { display: none !important; }
+
+/* ── CSS custom properties ─────────────────────────────────── */
+.reveal {
+  --liveurl-bg:          #16213e;
+  --liveurl-bg-alt:      #1a1a2e;
+  --liveurl-border:      rgba(255, 255, 255, 0.10);
+  --liveurl-accent:      #7eb8f7;
+  --liveurl-text:        #c8d4e8;
+  --liveurl-text-muted:  #6878a0;
+  --liveurl-radius:      8px;
+  --liveurl-transition:  0.26s cubic-bezier(0.4, 0, 0.2, 1);
+  --liveurl-width:       42vw;     /* overridden per-instance via JS */
+  --liveurl-shadow:      -4px 0 32px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Drawer shell ───────────────────────────────────────────── */
+.liveurl-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--liveurl-bg-alt);
+  color: var(--liveurl-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  z-index: 1000;
+  transition: transform var(--liveurl-transition), opacity var(--liveurl-transition);
+  /* Prevent the drawer from capturing clicks when closed */
+  pointer-events: none;
+}
+
+.liveurl-drawer.liveurl-open {
+  pointer-events: auto;
+}
+
+/* ── Position variants ──────────────────────────────────────── */
+.liveurl-pos-right {
+  right: 0;
+  width: var(--liveurl-width);
+  box-shadow: var(--liveurl-shadow);
+  transform: translateX(100%);
+}
+
+.liveurl-pos-left {
+  left: 0;
+  width: var(--liveurl-width);
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.45);
+  transform: translateX(-100%);
+}
+
+/* Full mode: bottom sheet */
+.liveurl-pos-full {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 20vh;
+  width: 100% !important;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.5);
+  transform: translateY(100%);
+}
+
+/* Open state resets all transforms */
+.liveurl-drawer.liveurl-open {
+  transform: translate(0, 0);
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.liveurl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--liveurl-bg);
+  border-bottom: 1px solid var(--liveurl-border);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.liveurl-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--liveurl-text-muted);
+  flex: 1;
+}
+
+/* Back button sits flush left, no border — it reads as a nav affordance */
+#liveurl-back-btn {
+  border-color: transparent;
+  margin-right: 2px;
+  flex-shrink: 0;
+}
+
+#liveurl-back-btn:hover {
+  border-color: var(--liveurl-border);
+}
+
+.liveurl-header-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ── Icon buttons (header, launcher) ────────────────────────── */
+.liveurl-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--liveurl-border);
+  color: var(--liveurl-text-muted);
+  border-radius: 5px;
+  padding: 5px 7px;
+  cursor: pointer;
+  transition: background 0.14s, color 0.14s, border-color 0.14s;
+  line-height: 1;
+}
+
+.liveurl-icon-btn:hover,
+.liveurl-icon-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+  outline: none;
+}
+
+/* ── Content wrapper ─────────────────────────────────────────── */
+.liveurl-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ── Iframe view ─────────────────────────────────────────────── */
+.liveurl-iframe-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.liveurl-iframe {
+  flex: 1;
+  border: none;
+  width: 100%;
+  background: #fff;
+}
+
+/* Small hint below iframe for blocked sites */
+.liveurl-iframe-hint {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: var(--liveurl-text-muted);
+  background: var(--liveurl-bg);
+  border-top: 1px solid var(--liveurl-border);
+  text-align: center;
+}
+
+.liveurl-link-btn {
+  background: none;
+  border: none;
+  color: var(--liveurl-accent);
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.liveurl-link-btn:hover { color: #a8d4ff; }
+
+/* ── Launcher list ───────────────────────────────────────────── */
+.liveurl-launcher {
+  list-style: none;
+  margin: 0;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.liveurl-launcher-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--liveurl-border);
+  border-radius: var(--liveurl-radius);
+  padding: 12px 14px;
+  transition: background 0.14s;
+}
+
+.liveurl-launcher-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.liveurl-launcher-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.liveurl-launcher-link {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--liveurl-accent);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.14s;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.liveurl-launcher-link:hover,
+.liveurl-launcher-link:focus-visible {
+  color: #a8d4ff;
+  text-decoration: underline;
+  outline: none;
+}
+
+.liveurl-ext-btn {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.liveurl-ext-btn:hover { opacity: 1; }
+
+/* ── Section headings (when slide + global URLs both present) ── */
+.liveurl-launcher-container {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.liveurl-section + .liveurl-section {
+  border-top: 1px solid var(--liveurl-border);
+}
+
+.liveurl-section-label {
+  padding: 10px 14px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--liveurl-text-muted);
+  user-select: none;
+}
+
+/* Remove top padding from launcher when inside a section */
+.liveurl-section .liveurl-launcher {
+  padding-top: 6px;
+}
+
+/* ── QR code (optional) ─────────────────────────────────────── */
+.liveurl-qr {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.liveurl-qr canvas,
+.liveurl-qr img {
+  border-radius: 5px;
+  max-width: 128px;
+  height: auto;
+}
+
+/* ── Toolbar toggle button ───────────────────────────────────── */
+.liveurl-toolbar-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--liveurl-radius);
+  cursor: pointer;
+  color: var(--liveurl-text);
+  z-index: 100;
+  transition: background 0.14s, color 0.14s, border-color 0.14s;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.liveurl-toolbar-btn:hover,
+.liveurl-toolbar-btn:focus-visible {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+  outline: none;
+}
+
+.liveurl-toolbar-btn.liveurl-active {
+  color: var(--liveurl-accent);
+  border-color: var(--liveurl-accent);
+  background: rgba(126, 184, 247, 0.12);
+}
+
+/* ── Slide badge ─────────────────────────────────────────────── */
+.liveurl-badge {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  background: rgba(126, 184, 247, 0.88);
+  color: #0d1526;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 10;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}

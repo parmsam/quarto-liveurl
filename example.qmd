@@ -1,0 +1,76 @@
+---
+title: "quarto-liveurl — Core Features"
+format:
+  revealjs:
+    liveurl:
+      button: true
+      shortcut: "u"
+      position: "right"
+      width: "44vw"
+      mode: "auto"
+      openNewTabFallback: true
+      rememberLastUrl: true
+revealjs-plugins:
+  - liveurl
+---
+
+## What is quarto-liveurl?
+
+- Attach live URLs to individual slides
+- Toggle an overlay panel with **`u`** or the link button (top-right). You can try it on the next slide! It's disabled on this one since there are no URLs attached.
+- Panel sits beside the slide — it doesn't cover it
+- Works in iframe embed mode or as a link launcher
+
+## Single URL — header shorthand {data-liveurl="https://quarto.org/docs/presentations/revealjs/"}
+
+Add `data-liveurl="..."` to any slide header to attach one URL.
+
+Press **`u`** — the panel opens and loads the page in an iframe.
+
+> **Note:** some sites block iframe embedding. Use the ↗ button in the
+> panel header to open in a new tab as a fallback.
+
+## Multiple URLs — block syntax
+
+::: {.liveurl}
+- [Quarto Presentations](https://quarto.org/docs/presentations/)
+- [Reveal.js Docs](https://revealjs.com)
+- [Quarto Extensions](https://quarto.org/docs/extensions/)
+:::
+
+Three URLs → **launcher list** in auto mode.
+
+Click a label to load it in the iframe. Use ← in the panel header to
+return to this list.
+
+## Both slide and global URLs {data-liveurl="https://quarto.org/docs/guide/"}
+
+::: {.liveurl}
+- [Quarto Gallery](https://quarto.org/docs/gallery/)
+:::
+
+When a slide has URLs *and* `liveurl.global` is set, the launcher shows
+two sections: **"This slide"** and **"Presentation"**.
+
+*(No global URL is set in this file — see `example-sticky.qmd` for that.)*
+
+## No URLs on this slide
+
+This slide has no `data-liveurl` attribute and no `.liveurl` block.
+
+The link button (top-right) is **dimmed** and pressing **`u`** does nothing.
+Navigate to another slide to re-enable it.
+
+## Persistent memory
+
+::: {.liveurl}
+- [Quarto Presentations](https://quarto.org/docs/presentations/)
+- [Reveal.js Docs](https://revealjs.com)
+- [Quarto Extensions](https://quarto.org/docs/extensions/)
+:::
+
+`rememberLastUrl: true` (the default) stores the last URL you clicked,
+keyed to the presentation file path.
+
+**Try it:** click one of the links above, close the panel, then reopen it —
+the same URL loads automatically.
