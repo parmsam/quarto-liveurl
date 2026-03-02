@@ -12,3 +12,5 @@ website:
         text: Core Features
       - href: example-sticky.qmd
         text: Sticky & Global
+      - href: example-paper.qmd
+        text: Paper Summary

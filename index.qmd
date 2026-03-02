@@ -8,3 +8,4 @@ A Quarto Reveal.js extension for attaching and viewing live URLs during presenta
 
 - [Core Features](example.qmd) — single URL, multiple URLs, launcher, no-URL slides
 - [Sticky & Global URL](example-sticky.qmd) — persistent panel across slide transitions
+- [Paper Summary](example-paper.qmd) — "Attention Is All You Need" with the full paper open in the panel
