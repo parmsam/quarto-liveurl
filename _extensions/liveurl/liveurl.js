@@ -69,10 +69,11 @@ window.RevealLiveURL = function () {
       }
 
       // ── Plugin state ────────────────────────────────────────────────────────
-      let panelOpen   = false;
-      let currentUrls = [];
-      let activeUrl   = null;
-      let currentView = "launcher"; // "launcher" | "iframe"
+      let panelOpen        = false;
+      let currentUrls      = [];
+      let activeUrl        = null;
+      let currentView      = "launcher"; // "launcher" | "iframe"
+      let lastRenderedKey  = null;       // JSON key of the last-rendered URL set
 
       // ── Build drawer DOM ────────────────────────────────────────────────────
       const revealEl = document.querySelector(".reveal");
@@ -182,10 +183,13 @@ window.RevealLiveURL = function () {
         drawer.setAttribute("aria-hidden", "false");
         setToolbarActive(true);
         adjustRevealLayout(true);
-        // Always re-render on open so closing + reopening reflects the current
-        // slide's URLs — important for sticky mode where slide changes don't
-        // touch the panel content while it's open.
-        renderPanel(currentUrls);
+        // Re-render only when the URL set has changed since the last render.
+        // If the URLs are the same (same slide, same globals), the existing
+        // iframe stays in the DOM and scroll position is preserved.
+        const urlKey = JSON.stringify(currentUrls.map((u) => u.url));
+        if (urlKey !== lastRenderedKey) {
+          renderPanel(currentUrls);
+        }
       }
 
       function closePanel() {
@@ -257,6 +261,7 @@ window.RevealLiveURL = function () {
 
       // ── Render panel content ────────────────────────────────────────────────
       function renderPanel(urls) {
+        lastRenderedKey = JSON.stringify(urls.map((u) => u.url));
         drawerContent.innerHTML = "";
 
         const hasUrls = urls.length > 0;
