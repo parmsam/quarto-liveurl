@@ -53,7 +53,8 @@ instead of digging through a static agenda page.
 - *"Give me a summary of the keynotes."*
 
 The assistant retrieves relevant session chunks from a vector store and
-generates a grounded answer — it won't hallucinate sessions.
+generates a grounded answer — it's less likely to hallucinate sessions,
+though errors are still possible.
 
 ## How it was built {.smaller}
 
